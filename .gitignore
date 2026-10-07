@@ -1,0 +1,16 @@
+# Secrets
+.env
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# PHP / base de données
+config.local.php
+*.sql.bak
+
+# macOS / éditeurs
+.DS_Store
+.idea/
+.vscode/
