@@ -27,6 +27,12 @@ api_data = response.json()
 if api_data["errors"]:
     sys.exit(f"L'API signale une erreur : {api_data['errors']}")
 
+players = api_data["response"][0]["players"]
+
+for player in players :
+    print(f"numéro : {player['number']}  nom : {player['name']} position: {player['position']}")
+print(len(players))
+
 print(response.status_code)
 print(response.json()["response"][0]["team"]["name"])
 
