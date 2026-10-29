@@ -1,6 +1,5 @@
 import os 
 import sys
-
 import requests
 from dotenv import load_dotenv
 
@@ -12,6 +11,11 @@ def stop_quota_if_almost_exhausted(daily_remaining):
     if(daily_remaining<=QUOTA_SAFETY):
         sys.exit(f"Il ne reste plus que {daily_remaining} requêtes aujourd'hui. Arrêt du script")
 
+def print_squad(players):
+    for player in players :
+        print(f"numéro : {player['number']}  nom : {player['name']} position: {player['position']}")
+    print(len(players))
+    
 load_dotenv()
 api_key = os.getenv("API_FOOTBALL_KEY")
 print("Clé trouvée" if api_key else "Clé absente")
@@ -34,9 +38,5 @@ minute_remaining = int(response.headers["x-ratelimit-remaining"])
 print(f"Quota : {daily_remaining} requêtes restantes sur {daily_limit} aujourd'hui")
 print(f"Requêtes restantes cette minute : {minute_remaining}")
 print(api_data["response"][0]["team"]["name"])
-
 players = api_data["response"][0]["players"]
-
-for player in players :
-    print(f"numéro : {player['number']}  nom : {player['name']} position: {player['position']}")
-print(len(players))
+print_squad(players)
