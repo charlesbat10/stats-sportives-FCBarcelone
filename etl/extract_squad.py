@@ -1,11 +1,15 @@
 import os 
 import sys
 import requests
+import json
 from dotenv import load_dotenv
+from pathlib import Path
+from datetime import date
 
 BASE_URL = "https://v3.football.api-sports.io"
 BARCELONA_TEAM_ID = 529
 QUOTA_SAFETY = 10
+today = date.today().isoformat()
 
 def stop_quota_if_almost_exhausted(daily_remaining):
     if(daily_remaining<=QUOTA_SAFETY):
@@ -30,6 +34,10 @@ response = requests.get(
 api_data = response.json()
 if api_data["errors"]:
     sys.exit(f"L'API signale une erreur : {api_data['errors']}")
+
+Path("data/raw").mkdir(parents=True, exist_ok=True)
+with open(f'data/raw/squad_{today}.json', "w", encoding="utf-8") as fichier:
+    json.dump(api_data, fichier, indent=2, ensure_ascii=False)
 
 daily_remaining = int(response.headers["x-ratelimit-requests-remaining"])
 stop_quota_if_almost_exhausted(daily_remaining)

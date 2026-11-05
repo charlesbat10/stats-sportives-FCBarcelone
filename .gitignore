@@ -10,6 +10,9 @@ __pycache__/
 config.local.php
 *.sql.bak
 
+# JSON
+data/raw
+
 # macOS / éditeurs
 .DS_Store
 .idea/
